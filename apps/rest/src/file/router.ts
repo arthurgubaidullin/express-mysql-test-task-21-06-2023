@@ -7,6 +7,7 @@ import { getFileRecordHandler } from './get-file-record/handler';
 import { listFileRecordHandler } from './list-file-record/handler';
 import { deleteFileRecordHandler } from './delete-file-record/handler';
 import { downloadFileHandler } from './download-file/handler';
+import { updateFileHandler } from './update-file/handler';
 
 const UPLOADS_PATH = path.join(cwd(), 'uploads');
 
@@ -21,6 +22,8 @@ file.get('/list', listFileRecordHandler);
 file.delete('/delete/:fileId', deleteFileRecordHandler);
 
 file.get('/download/:fileId', downloadFileHandler);
+
+file.put('/update/:fileId', upload.single('file'), updateFileHandler);
 
 file.get('/:fileId', getFileRecordHandler);
 
