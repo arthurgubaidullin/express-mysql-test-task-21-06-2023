@@ -1,5 +1,5 @@
 import express from 'express';
-import file from './file';
+import file from './file/router';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
