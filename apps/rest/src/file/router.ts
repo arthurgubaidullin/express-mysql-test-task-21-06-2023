@@ -1,21 +1,15 @@
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import { cwd } from 'process';
+import { uploadFileHandler } from './upload-file/handler';
+
+const UPLOADS_PATH = path.join(cwd(), 'uploads');
+
+const upload = multer({ dest: UPLOADS_PATH });
 
 const file = express.Router();
 
-const unimplementedHandler = (req, res) => {
-  res.status(501).send('Unimplemented.').end();
-};
-
-file.get('/:id', unimplementedHandler);
-
-file.post('/upload', unimplementedHandler);
-
-file.get('/list', unimplementedHandler);
-
-file.delete('/delete/:id', unimplementedHandler);
-
-file.get('/download/:id', unimplementedHandler);
-
-file.put('/update/:id', unimplementedHandler);
+file.post('/upload', upload.single('file'), uploadFileHandler);
 
 export default file;
