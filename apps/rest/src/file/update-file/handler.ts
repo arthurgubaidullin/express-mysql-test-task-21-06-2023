@@ -10,6 +10,11 @@ export async function updateFileHandler(
   req: express.Request<unknown>,
   res: express.Response<never>
 ): Promise<void> {
+  if (!req.file) {
+    res.status(500).end();
+    return;
+  }
+
   const params = TypeWithFileId.decode(req.params);
 
   if (isLeft(params)) {
