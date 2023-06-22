@@ -6,7 +6,9 @@
     "build": "npx nx run-many --target=build,test,lint",
     "serve": "npx nx run-many --target=serve",
     "e2e": "npx nx run-many --target=e2e",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "postinstall": "npx prisma generate",
+    "db:setup": "npx prisma db push"
   },
   "private": true,
   "dependencies": {
