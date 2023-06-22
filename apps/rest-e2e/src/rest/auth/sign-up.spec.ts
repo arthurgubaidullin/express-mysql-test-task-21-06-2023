@@ -10,6 +10,7 @@ describe('POST /signup', () => {
 
     expect(res.status).toBe(201);
     expect(res.data.result.access_token).toBeTruthy();
+    expect(res.data.result.refresh_token).toBeTruthy();
   });
 
   it('should fail to sign up same user twice', async () => {
