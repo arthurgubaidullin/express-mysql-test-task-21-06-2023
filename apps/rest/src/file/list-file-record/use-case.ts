@@ -1,17 +1,17 @@
 import { FileRepository } from '../repository/instance';
 import { FileRecord } from '../file-record';
 
-export function listFileRecord(
+export async function listFileRecord(
   data: Readonly<{
     page: number;
     listSize: number;
   }>
-): {
+): Promise<{
   list: readonly FileRecord[];
   page: number;
   listSize: number;
-} {
-  const list = FileRepository.getFileRecords();
+}> {
+  const list = await FileRepository.getFileRecords();
   const start = data.page - 1 * data.listSize;
   const end = start + data.listSize;
   return {

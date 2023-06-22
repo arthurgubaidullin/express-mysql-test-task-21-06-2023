@@ -16,7 +16,7 @@ export async function deleteFileRecordHandler(
     return;
   }
 
-  const file = FileRepository.getFileRecord(params.right.fileId);
+  const file = await FileRepository.getFileRecord(params.right.fileId);
 
   if (Option.isNone(file)) {
     res.status(400).end();

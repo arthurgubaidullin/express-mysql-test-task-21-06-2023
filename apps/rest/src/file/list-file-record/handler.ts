@@ -5,10 +5,10 @@ import { listFileRecord } from './use-case';
 import { ListRequest } from './request';
 import { ListResponse } from './response';
 
-export function listFileRecordHandler(
+export async function listFileRecordHandler(
   req: express.Request<unknown>,
   res: express.Response<t.OutputOf<typeof ListResponse>>
-): void {
+): Promise<void> {
   const query = ListRequest.decode(req.query);
 
   if (isLeft(query)) {
@@ -16,7 +16,7 @@ export function listFileRecordHandler(
     return;
   }
 
-  const result = listFileRecord({
+  const result = await listFileRecord({
     ...query.right,
     listSize: query.right.list_size,
   });

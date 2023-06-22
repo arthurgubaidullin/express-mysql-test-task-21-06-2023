@@ -6,10 +6,10 @@ import { isLeft } from 'fp-ts/Either';
 import { TypeWithFileId } from '../type-with-file-id';
 import { OutputOf } from 'io-ts';
 
-export function getFileRecordHandler(
+export async function getFileRecordHandler(
   req: express.Request<unknown>,
   res: express.Response<OutputOf<typeof FileRecord>>
-): void {
+): Promise<void> {
   const params = TypeWithFileId.decode(req.params);
 
   if (isLeft(params)) {
@@ -17,7 +17,7 @@ export function getFileRecordHandler(
     return;
   }
 
-  const record = FileRepository.getFileRecord(params.right.fileId);
+  const record = await FileRepository.getFileRecord(params.right.fileId);
 
   if (isNone(record)) {
     res.status(404).end();

@@ -4,19 +4,21 @@ import { FileRepository } from './type';
 
 const records: Map<string, FileRecord.FileRecord> = new Map();
 
-function createFileRecord(record: FileRecord.FileRecord): void {
+async function createFileRecord(record: FileRecord.FileRecord): Promise<void> {
   if (!records.has(record.fileId)) {
     records.set(record.fileId, record);
   }
 }
 
-function updateFileRecord(record: FileRecord.FileRecord): void {
+async function updateFileRecord(record: FileRecord.FileRecord): Promise<void> {
   if (records.has(record.fileId)) {
     records.set(record.fileId, record);
   }
 }
 
-function getFileRecord(fileId: string): Option.Option<FileRecord.FileRecord> {
+async function getFileRecord(
+  fileId: string
+): Promise<Option.Option<FileRecord.FileRecord>> {
   if (records.has(fileId)) {
     const record = records.get(fileId);
     if (record) {
@@ -27,11 +29,11 @@ function getFileRecord(fileId: string): Option.Option<FileRecord.FileRecord> {
   return Option.none;
 }
 
-export function getFileRecords(): FileRecord.FileRecord[] {
+export async function getFileRecords(): Promise<FileRecord.FileRecord[]> {
   return Array.from(records.values());
 }
 
-export function deleteFileRecord(fileId: string): void {
+export async function deleteFileRecord(fileId: string): Promise<void> {
   records.delete(fileId);
 }
 

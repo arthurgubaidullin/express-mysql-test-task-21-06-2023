@@ -2,11 +2,11 @@ import * as Option from 'fp-ts/Option';
 import * as FileRecord from '../file-record';
 
 export type FileRepository = {
-  readonly createFileRecord: (record: FileRecord.FileRecord) => void;
+  readonly createFileRecord: (record: FileRecord.FileRecord) => Promise<void>;
   readonly getFileRecord: (
     fileId: string
-  ) => Option.Option<FileRecord.FileRecord>;
-  readonly getFileRecords: () => readonly FileRecord.FileRecord[];
-  readonly deleteFileRecord: (fileId: string) => void;
-  readonly updateFileRecord: (record: FileRecord.FileRecord) => void;
+  ) => Promise<Option.Option<FileRecord.FileRecord>>;
+  readonly getFileRecords: () => Promise<readonly FileRecord.FileRecord[]>;
+  readonly deleteFileRecord: (fileId: string) => Promise<void>;
+  readonly updateFileRecord: (record: FileRecord.FileRecord) => Promise<void>;
 };

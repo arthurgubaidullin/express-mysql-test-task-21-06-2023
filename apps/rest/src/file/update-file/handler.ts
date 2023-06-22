@@ -22,7 +22,7 @@ export async function updateFileHandler(
     return;
   }
 
-  const record = FileRepository.getFileRecord(params.right.fileId);
+  const record = await FileRepository.getFileRecord(params.right.fileId);
 
   if (Option.isNone(record)) {
     res.status(404).end();
