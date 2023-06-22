@@ -34,7 +34,7 @@ export async function signInWithRefreshTokenHandler(
 
   const repo = getUserRepository();
 
-  const _record = repo.getUserRecord(payload.userId);
+  const _record = await repo.getUserRecord(payload.userId);
 
   if (O.isNone(_record)) {
     res.status(400).json({ ok: false, reason: 'No user found.' }).end();

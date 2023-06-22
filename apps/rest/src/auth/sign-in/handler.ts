@@ -22,7 +22,7 @@ export async function signInHandler(
 
   const repo = getUserRepository();
 
-  const _record = repo.getUserRecord(params.id);
+  const _record = await repo.getUserRecord(params.id);
 
   if (O.isNone(_record)) {
     res.status(400).json({ ok: false, reason: 'No user found.' }).end();

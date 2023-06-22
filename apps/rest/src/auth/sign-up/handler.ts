@@ -28,7 +28,7 @@ export async function signUpHandler(
   const accessToken = JWT.sign(record.userId);
   const refreshToken = JWT.sign(record.userId, 'refresh');
 
-  const result = repo.createUserRecord(record);
+  const result = await repo.createUserRecord(record);
 
   if (E.isLeft(result)) {
     res.status(400).json({ ok: false, reason: result.left.message }).end();
