@@ -7,6 +7,11 @@ export function uploadFileHandler(
   req: express.Request<unknown>,
   res: express.Response<OutputOf<typeof FileRecord.FileRecord>>
 ): void {
+  if (!req.file) {
+    res.status(500).end();
+    return;
+  }
+
   const record = FileRecord.create(req.file);
 
   FileRepository.createFileRecord(record);
