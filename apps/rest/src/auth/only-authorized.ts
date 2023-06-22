@@ -53,3 +53,13 @@ export const onlyAuthorized =
 
     return f(payload.userId)(req, res);
   };
+
+export const onlyAuthorizedMiddleware = (
+  req: express.Request<unknown>,
+  res: express.Response,
+  next: () => void | Promise<void>
+) => {
+  return onlyAuthorized(() => () => {
+    next();
+  })(req, res);
+};
