@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import file from './file/router';
 import auth from './auth/router';
 
@@ -6,7 +7,9 @@ const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
+const jsonParser = bodyParser.json();
 
+app.use(jsonParser);
 app.use('/file', file);
 app.use(auth);
 
