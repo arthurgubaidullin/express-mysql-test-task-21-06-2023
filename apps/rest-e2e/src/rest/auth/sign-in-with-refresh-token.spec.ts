@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as Email from './email';
+import { createHttpClient } from '../file/http-client';
 
 describe('POST /signin/new_token', () => {
   let id: string | null = null;
@@ -28,5 +29,16 @@ describe('POST /signin/new_token', () => {
     expect(res.status).toBe(200);
     expect(res.data.result.access_token).toBeTruthy();
     expect(res.data.result.refresh_token).toBeTruthy();
+  });
+
+  it('should not return a new token', async () => {
+    await createHttpClient(null).post(`/signin/new_token`, {
+      refresh_token: refreshToken,
+    });
+    const res = await createHttpClient(null).post(`/signin/new_token`, {
+      refresh_token: refreshToken,
+    });
+
+    expect(res.status).toBe(400);
   });
 });
