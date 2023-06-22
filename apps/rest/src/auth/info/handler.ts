@@ -4,7 +4,7 @@ import { onlyAuthorized } from '../only-authorized';
 import { SignInResponse } from './response';
 
 export const infoHandler = onlyAuthorized(
-  (userId: string) =>
+  ({ userId }: { userId: string }) =>
     async (
       req: express.Request<unknown>,
       res: express.Response<t.OutputOf<typeof SignInResponse>>

@@ -4,20 +4,24 @@ import { NonEmptyString } from 'io-ts-types';
 import * as AccessToken from '../access-token';
 import * as JWT from '../jwt/jwt';
 import { Mixed, OutputOf } from 'io-ts';
+import { blRepository } from './bl-repository/instance';
 
 export const onlyAuthorized =
   <C extends Mixed>(
     f: (
-      userId: string
+      data: Readonly<{
+        userId: string;
+        rawToken: string;
+      }>
     ) => (
       req: express.Request<unknown>,
       res: express.Response<OutputOf<C>>
     ) => void | Promise<void>
   ) =>
-  (
+  async (
     req: express.Request<unknown>,
     res: express.Response<OutputOf<C>>
-  ): void | Promise<void> => {
+  ): Promise<void> => {
     const authorization = req.header('Authorization');
 
     if (!NonEmptyString.is(authorization)) {
@@ -43,6 +47,11 @@ export const onlyAuthorized =
     }
     const payload = _payload.value;
 
+    if (await blRepository.isTokenBanned(token)) {
+      res.status(401).json({ ok: false, reason: 'Token is banned.' }).end();
+      return;
+    }
+
     if (payload.kind !== 'access') {
       res
         .status(401)
@@ -51,7 +60,7 @@ export const onlyAuthorized =
       return;
     }
 
-    return f(payload.userId)(req, res);
+    return f({ userId: payload.userId, rawToken: token })(req, res);
   };
 
 export const onlyAuthorizedMiddleware = (
