@@ -13,9 +13,7 @@ describe('GET /file/:fileId', () => {
   beforeEach(async () => {
     id = Email.generate();
     ({ accessToken } = await registerUser(id, password));
-  });
 
-  beforeEach(async () => {
     const file = fs.createReadStream(__filename);
 
     const form = new FormData();
