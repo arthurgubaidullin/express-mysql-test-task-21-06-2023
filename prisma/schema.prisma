@@ -16,6 +16,16 @@ model Users {
   salt     String
 }
 
+model File {
+  fileId   String @unique
+  name     String
+  ext      String
+  mimeType String
+  size     Int
+  date     String
+  path     String
+}
+
 model BlackListRecord {
   id         String   @id @default(cuid())
   token      String   @db.Text
