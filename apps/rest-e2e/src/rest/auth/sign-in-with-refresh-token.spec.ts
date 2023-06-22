@@ -20,12 +20,12 @@ describe('POST /signin/new_token', () => {
     const res = await axios.post(
       `/signin/new_token`,
       {
-        token: refreshToken,
+        refresh_token: refreshToken,
       },
       { validateStatus: () => true }
     );
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
     expect(res.data.result.access_token).toBeTruthy();
     expect(res.data.result.refresh_token).toBeTruthy();
   });
