@@ -27,10 +27,17 @@ export async function signUpHandler(
 
   const accessToken = sign(record.userId);
 
-  repo.createUserRecord(record);
+  const result = repo.createUserRecord(record);
+
+  if (isLeft(result)) {
+    res.status(400).json({ ok: false, reason: result.left.message }).end();
+    return;
+  }
 
   res
     .status(201)
-    .json(SignUpResponse.encode({ access_token: accessToken }))
+    .json(
+      SignUpResponse.encode({ ok: true, result: { access_token: accessToken } })
+    )
     .end();
 }
