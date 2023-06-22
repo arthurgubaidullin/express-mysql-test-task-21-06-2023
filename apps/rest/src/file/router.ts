@@ -8,12 +8,15 @@ import { listFileRecordHandler } from './list-file-record/handler';
 import { deleteFileRecordHandler } from './delete-file-record/handler';
 import { downloadFileHandler } from './download-file/handler';
 import { updateFileHandler } from './update-file/handler';
+import { onlyAuthorizedMiddleware } from '../auth/only-authorized';
 
 const UPLOADS_PATH = path.join(cwd(), 'uploads');
 
 const upload = multer({ dest: UPLOADS_PATH });
 
 const file = express.Router();
+
+file.use(onlyAuthorizedMiddleware);
 
 file.post('/upload', upload.single('file'), uploadFileHandler);
 
