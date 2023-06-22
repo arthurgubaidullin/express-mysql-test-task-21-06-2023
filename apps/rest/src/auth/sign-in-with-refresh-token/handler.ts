@@ -6,6 +6,7 @@ import * as JWT from '../../jwt/jwt';
 import { getUserRepository } from '../repository/instance';
 import { SignInWithRefreshTokenRequest } from './request';
 import { SignInWithRefreshTokenResponse } from './response';
+import { blRepository } from '../bl-repository/instance';
 
 export async function signInWithRefreshTokenHandler(
   req: express.Request<unknown>,
@@ -26,6 +27,11 @@ export async function signInWithRefreshTokenHandler(
   }
   const payload = _payload.value;
 
+  if (await blRepository.isTokenBanned(body.refresh_token)) {
+    res.status(400).json({ ok: false, reason: 'Invalid refresh token.' }).end();
+    return;
+  }
+
   const repo = getUserRepository();
 
   const _record = repo.getUserRecord(payload.userId);
@@ -35,6 +41,8 @@ export async function signInWithRefreshTokenHandler(
     return;
   }
   const record = _record.value;
+
+  await blRepository.banToken(body.refresh_token);
 
   const accessToken = JWT.sign(record.userId);
   const refreshToken = JWT.sign(record.userId, 'refresh');
