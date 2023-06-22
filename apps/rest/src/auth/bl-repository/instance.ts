@@ -1,4 +1,4 @@
-import { inMemoryRepository } from './in-memory';
+import { mysqlRepository } from './mysql';
 import { BLRepository } from './type';
 
-export const blRepository: BLRepository = inMemoryRepository;
+export const blRepository: BLRepository = mysqlRepository();
