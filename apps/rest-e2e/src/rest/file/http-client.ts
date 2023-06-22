@@ -6,6 +6,7 @@ export function createHttpClient(accessToken: string | null) {
         headers: {
           Authorization: `bearer ${accessToken}`,
         },
+        validateStatus: () => true,
       }
     : {};
   return axios.create(config);
