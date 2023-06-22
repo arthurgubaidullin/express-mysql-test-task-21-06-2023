@@ -5,7 +5,7 @@ import * as E from 'fp-ts/Either';
 import { SignUpRequest } from './request';
 import { SignUpResponse } from './response';
 import * as t from 'io-ts';
-import * as JWT from './jwt';
+import * as JWT from '../../jwt/jwt';
 
 export async function signUpHandler(
   req: express.Request<unknown>,
