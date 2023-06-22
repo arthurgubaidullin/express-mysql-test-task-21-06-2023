@@ -12,7 +12,7 @@ ENV PORT=3000
 WORKDIR /app
 
 RUN addgroup --system rest && \
-          adduser --system -G rest rest
+  adduser --system -G rest rest
 
 COPY dist/apps/rest rest
 RUN chown -R rest:rest .
