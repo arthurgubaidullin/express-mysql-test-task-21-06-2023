@@ -21,4 +21,6 @@ RUN chown -R rest:rest .
 # The bundled output will include external dependencies.
 RUN npm --prefix rest --omit=dev -f install
 
+COPY node_modules/.prisma/client rest/node_modules/.prisma/client
+
 CMD [ "node", "rest" ]
