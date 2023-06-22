@@ -1,11 +1,21 @@
 import * as Salt from './salt';
 import * as Password from './password';
+import * as t from 'io-ts';
+import { NonEmptyString } from 'io-ts-types';
 
 export interface UserRecord {
   readonly userId: string;
   readonly password: string;
   readonly salt: string;
 }
+
+export const UserRecord = t.readonly(
+  t.strict({
+    userId: NonEmptyString,
+    password: NonEmptyString,
+    salt: NonEmptyString,
+  })
+);
 
 export async function create(
   userId: string,
