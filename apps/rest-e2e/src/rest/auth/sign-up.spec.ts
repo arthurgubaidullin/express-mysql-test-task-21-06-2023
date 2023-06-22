@@ -8,5 +8,6 @@ describe('POST /signup', () => {
     });
 
     expect(res.status).toBe(201);
+    expect(res.data.access_token).toBeTruthy();
   });
 });
