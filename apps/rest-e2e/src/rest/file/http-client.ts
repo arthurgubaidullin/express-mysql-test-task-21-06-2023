@@ -8,6 +8,8 @@ export function createHttpClient(accessToken: string | null) {
         },
         validateStatus: () => true,
       }
-    : {};
+    : {
+        validateStatus: () => true,
+      };
   return axios.create(config);
 }
