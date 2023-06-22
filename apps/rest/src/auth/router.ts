@@ -3,12 +3,15 @@ import { signUpHandler } from './sign-up/handler';
 import { signInHandler } from './sign-in/handler';
 import { infoHandler } from './info/handler';
 import { signInWithRefreshTokenHandler } from './sign-in-with-refresh-token/handler';
+import { signOutHandler } from './sign-out/handler';
 
 const auth = express.Router();
 
 auth.post('/signup', signUpHandler);
 
 auth.post('/signin', signInHandler);
+
+auth.post('/logout', signOutHandler);
 
 auth.post('/signin/new_token', signInWithRefreshTokenHandler);
 
