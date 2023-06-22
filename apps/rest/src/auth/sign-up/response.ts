@@ -5,6 +5,7 @@ export const SignUpResponse = create(
   t.readonly(
     t.strict({
       access_token: t.string,
+      refresh_token: t.string,
     })
   )
 );

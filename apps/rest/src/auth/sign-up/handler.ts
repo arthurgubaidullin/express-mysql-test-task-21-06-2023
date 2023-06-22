@@ -26,6 +26,7 @@ export async function signUpHandler(
   );
 
   const accessToken = JWT.sign(record.userId);
+  const refreshToken = JWT.sign(record.userId, 'refresh');
 
   const result = repo.createUserRecord(record);
 
@@ -37,7 +38,13 @@ export async function signUpHandler(
   res
     .status(201)
     .json(
-      SignUpResponse.encode({ ok: true, result: { access_token: accessToken } })
+      SignUpResponse.encode({
+        ok: true,
+        result: {
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        },
+      })
     )
     .end();
 }
