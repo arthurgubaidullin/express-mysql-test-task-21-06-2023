@@ -19,7 +19,9 @@ function updateFileRecord(record: FileRecord.FileRecord): void {
 function getFileRecord(fileId: string): Option.Option<FileRecord.FileRecord> {
   if (records.has(fileId)) {
     const record = records.get(fileId);
-    return Option.some(record);
+    if (record) {
+      return Option.some(record);
+    }
   }
 
   return Option.none;
