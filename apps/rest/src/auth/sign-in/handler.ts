@@ -6,6 +6,7 @@ import * as JWT from '../../jwt/jwt';
 import { getUserRepository } from '../repository/instance';
 import { SignInRequest } from './request';
 import { SignInResponse } from './response';
+import { hash } from '../password';
 
 export async function signInHandler(
   req: express.Request<unknown>,
@@ -25,10 +26,14 @@ export async function signInHandler(
 
   if (O.isNone(_record)) {
     res.status(400).json({ ok: false, reason: 'No user found.' }).end();
-
     return;
   }
   const record = _record.value;
+
+  if (record.password !== (await hash(params.password, record.salt))) {
+    res.status(400).json({ ok: false, reason: 'Bad password.' }).end();
+    return;
+  }
 
   const accessToken = JWT.sign(record.userId);
   const refreshToken = JWT.sign(record.userId, 'refresh');
