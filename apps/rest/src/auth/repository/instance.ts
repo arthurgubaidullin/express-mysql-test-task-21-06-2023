@@ -1,5 +1,4 @@
-import { getInMemoryUserRepository } from './in-memory';
+import { getMySQLRepository } from './mysql';
 import { UserRepository } from './type';
 
-export const getUserRepository = (): UserRepository =>
-  getInMemoryUserRepository();
+export const getUserRepository = (): UserRepository => getMySQLRepository();
