@@ -31,7 +31,7 @@ export async function updateFileHandler(
 
   const changed = FileRecord.change(req.file, record.value);
 
-  FileRepository.updateFileRecord(changed);
+  await FileRepository.updateFileRecord(changed);
 
   await rm(record.value.path);
 
