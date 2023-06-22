@@ -23,4 +23,10 @@ describe('POST /logout', () => {
     });
     expect(res.status).toBe(401);
   });
+
+  it('should return unauthorized error', async () => {
+    await createHttpClient(accessToken).post(`/logout`);
+    const res = await createHttpClient(accessToken).get(`/info`);
+    expect(res.status).toBe(401);
+  });
 });
